@@ -4,8 +4,15 @@ dotenv.load_dotenv()
 
 class Config(object):
     # Static configuration options
-    # enable flask-sqlalchemy event system, we don't use it and it costs cpu time + memory
+    # enable flask-sqlalchemy event system
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': False, # if we test a connection before issuing statements to it, usefull for debugging, not for production
+        'pool_recycle': 1800,  # how long (in seconds) a connection may live, always closed/refreshed after this period
+        'pool_size': 10, # max number of tcp connections in our pool
+        'max_overflow': 0, # how much extra (on top of pool_size) connections we allow, not efficient -> disable
+        'pool_timeout': 30,  # how long we are willing to wait for the pool to give us back a connection
+    }
     # embed some variables by which we can check our runtime environment
     MAX_CONTENT_LENGTH = 300 * 1024 * 1024
     # Celery config keys
@@ -23,6 +30,7 @@ class Config(object):
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
+    SOCKETIO_MESSAGE_QUEUE = os.environ.get('SOCKETIO_MESSAGE_QUEUE')
 
 
 # create the class instance (imported in __init__.py)

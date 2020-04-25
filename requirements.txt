@@ -6,8 +6,7 @@ Flask-Migrate
 flask-restx
 flask-socketio
 SQLAlchemy
-blinker # required for event triggering on SQLAlchemy ORM/model updates
-# Stuff required for Celery (we use the redis backend)
+blinker # required for event system in flask & SQLAlchemy
 celery
 celery[redis]
 redis

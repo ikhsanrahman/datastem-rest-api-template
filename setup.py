@@ -4,9 +4,9 @@ with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="datastem_rest_api_template",
+    name="app",
     version="0.0.1",
-    url="https://github.com/srslynow/datastem_rest_api_template",
+    url="https://github.com/srslynow/datastem-rest-api-template",
     author="Koen Vijverberg",
     author_email="koen@vijverb.nl",
     description="A REST API template with Flask, SQLAlchemy, Alembic, Celery and Socket.IO via a factory (create_app) function",

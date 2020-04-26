@@ -1,12 +1,12 @@
 import os
 
 # apply eventlet monkey-patching if we're in production mode (serving via eventlet)
-from datastem_rest_api_template.config import config
+from app.config import config
 if not config.DEBUG:
     import eventlet
     eventlet.monkey_patch()
 
-from datastem_rest_api_template import create_app, celery, socketio
+from app import create_app, celery, socketio
 
 app = create_app()
 

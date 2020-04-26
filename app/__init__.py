@@ -1,12 +1,10 @@
 from flask import Flask, Blueprint
-from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
 from flask_migrate import Migrate
 
-from datastem_rest_api_template.utils.flask_celery import Celery
-from datastem_rest_api_template.config import config
+from app.utils.flask_celery import Celery
+from app.config import config
 
-db = SQLAlchemy()
 celery = Celery()
 socketio = SocketIO()
 flask_migrate = Migrate()
@@ -18,6 +16,7 @@ def create_app():
     # set app config
     app.config.from_object(config)
     # attach database to the app
+    from app.models import db
     db.init_app(app)
     # initialize the flask migration service
     # this gives us access to commands `flask db migrate` and `flask db upgrade`

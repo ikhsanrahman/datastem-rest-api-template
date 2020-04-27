@@ -1,4 +1,6 @@
 Flask
+Flask-Login
+Flask-JWT-Extended[asymmetric_crypto]
 Flask-SQLAlchemy
 Flask-Bcrypt
 Flask-Cors
@@ -7,6 +9,5 @@ flask-restx
 flask-socketio
 SQLAlchemy
 blinker # required for event system in flask & SQLAlchemy
-celery
 celery[redis]
 redis

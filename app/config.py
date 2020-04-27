@@ -7,11 +7,11 @@ class Config(object):
     # enable flask-sqlalchemy event system
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_ENGINE_OPTIONS = {
-        'pool_pre_ping': False, # if we test a connection before issuing statements to it, usefull for debugging, not for production
-        'pool_recycle': 1800,  # how long (in seconds) a connection may live, always closed/refreshed after this period
-        'pool_size': 10, # max number of tcp connections in our pool
-        'max_overflow': 0, # how much extra (on top of pool_size) connections we allow, not efficient -> disable
-        'pool_timeout': 30,  # how long we are willing to wait for the pool to give us back a connection
+        # 'pool_pre_ping': False, # if we test a connection before issuing statements to it, usefull for debugging, not for production
+        # 'pool_recycle': 1800,  # how long (in seconds) a connection may live, always closed/refreshed after this period
+        # 'pool_size': 10, # max number of tcp connections in our pool
+        # 'max_overflow': 0, # how much extra (on top of pool_size) connections we allow, not efficient -> disable
+        # 'pool_timeout': 30,  # how long we are willing to wait for the pool to give us back a connection
     }
     # embed some variables by which we can check our runtime environment
     MAX_CONTENT_LENGTH = 300 * 1024 * 1024
@@ -20,7 +20,7 @@ class Config(object):
     enable_utc = True
     # configurable variables via environment
     # The secret key is used by Flask to encrypt session cookies.
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
     # The shared key is used to authenticate the REST API's internally
     SHARED_KEY = os.environ.get('SHARED_KEY')
     PROJ = os.environ.get('PROJ', 'development')

@@ -3,7 +3,6 @@ import datetime
 from flask import current_app
 from flask_restx import Resource, Namespace, fields
 from flask_login import login_required, current_user
-from flask_jwt_extended import create_access_token
 
 from app.services.user_service import user_service
 
@@ -41,6 +40,7 @@ class UserResource(Resource):
         return current_user
         # return user_service.get_all()
 
+    @login_required
     @api.expect(user, skip_none=True)
     @api.marshal_with(user)
     def patch(self):
@@ -48,18 +48,20 @@ class UserResource(Resource):
         pass
         # return user_service.update(api.payload)
 
+    @login_required
     @api.expect(new_user_request, validate=True)
     @api.marshal_with(user)
     def post(self):
         """Create a new User """
-        pass
+        return user_service.new_user(api.payload)
 
 @api.route('/login')
 class UserLoginResource(Resource):
-    @api.expect(new_user_request, validate=True)
+    @api.expect(user_login_request, validate=True)
     @api.marshal_with(user_login_response)
     def post(self):
-        # TODO: check login
-        # user authenticated successfully, create an access token and sign it
-        token = create_access_token({ 'user_id': 1 })
+        # send username and password to the user service to check the login
+        # if it fails the user service raises an Exception, therefore if the login function
+        # returns we can assume it succeeded
+        token = user_service.login(**api.payload)
         return {'token': token }

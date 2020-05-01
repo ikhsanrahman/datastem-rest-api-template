@@ -39,7 +39,15 @@ def create_app():
         description='Provides a gateway for all operations on the stored entities',
         prefix='/v1',
         default_mediatype='application/json;charset=utf-8',
-        doc='/' if app.config.get('DEBUG') else False
+        doc='/' if app.config.get('DEBUG') else False,
+        security='jwt',
+        authorizations = {
+            'jwt': {
+                'type': 'apiKey',
+                'in': 'header',
+                'name': 'Authorization'
+            }
+        }
     )
     from app.controllers.user_controller import api as user_api
     api.add_namespace(user_api)

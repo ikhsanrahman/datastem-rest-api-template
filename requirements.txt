@@ -11,3 +11,4 @@ SQLAlchemy
 blinker # required for event system in flask & SQLAlchemy
 celery[redis]
 redis
+bcrypt

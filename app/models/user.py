@@ -1,3 +1,4 @@
+import bcrypt
 from flask_login.mixins import UserMixin
 from flask_jwt_extended import decode_token
 
@@ -11,9 +12,22 @@ class User(db.Model, TimestampMixin, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     
     # object properties
-    username = db.Column(db.UnicodeText, nullable=False)
-    email = db.Column(EmailType, nullable=False)
-    password = db.Column(db.Unicode(255), nullable=False)
+    username = db.Column(db.UnicodeText, nullable=False, unique=True)
+    email = db.Column(EmailType, nullable=False, unique=True)
+    password_hash = db.Column(db.Unicode(255), nullable=False)
+
+    @property
+    def password(self):
+        raise AttributeError('password not readable')
+
+    @password.setter
+    def password(self, password):
+        # bcrypt expects bytes as input
+        self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    def check_password(self, password):
+        # bcrypt expects bytes as input
+        return bcrypt.checkpw(password.encode('utf-8'), self.password_hash.encode('utf-8'))
 
 # let flask-login know how it can get to a user
 @login.user_loader

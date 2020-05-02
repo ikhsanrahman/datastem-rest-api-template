@@ -50,7 +50,9 @@ def create_app():
         }
     )
     from app.controllers.user_controller import api as user_api
+    from app.controllers.common_controller import api as common_api
     api.add_namespace(user_api)
+    api.add_namespace(common_api)
     app.register_blueprint(blueprint)
     # all loaded extensions are now bound to this app object, return it for serving by a WSGI app
     return app

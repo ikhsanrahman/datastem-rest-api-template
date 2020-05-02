@@ -48,7 +48,7 @@ class UserResource(Resource):
         pass
         # return user_service.update(api.payload)
 
-    @login_required
+    # @login_required
     @api.expect(new_user_request, validate=True)
     @api.marshal_with(user)
     def post(self):
